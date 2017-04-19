@@ -11,10 +11,13 @@ import {TableElementsCountComponent} from './table-elements-count/table-elements
 import {TablePaginationComponent} from './table-pagination/table-pagination.component';
 import {TableSortComponent} from './table-sort/table-sort.component';
 import {PersonService} from './person.service'
+import {LoginComponent} from './login/login.component';
+import {AuthenticationService} from './auth/authentication.service';
 
 const appRoutes: Routes = [
-    {path: '', component: PersonListComponent},
+    {path: 'personlist', component: PersonListComponent},
     {path: 'person/:id', component: PersonComponent}
+   , {path: '',  component: LoginComponent }
 ];
 
 @NgModule({
@@ -25,6 +28,7 @@ const appRoutes: Routes = [
         TableElementsCountComponent,
         TablePaginationComponent,
         TableSortComponent
+      ,        LoginComponent
     ],
     imports: [
         BrowserModule,
@@ -32,7 +36,7 @@ const appRoutes: Routes = [
         HttpModule,
         RouterModule.forRoot(appRoutes)
     ],
-    providers: [PersonService],
+    providers: [PersonService, AuthenticationService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -6,6 +6,7 @@ import * as Rx from 'rxjs/Rx';
 import {PersonService} from '../person.service';
 import {Person} from '../domain';
 import {showLoading, hideLoading, doNothing} from '../commons'
+import {AuthenticationService} from '../auth/authentication.service'
 
 @Component({
     selector: 'app-person',
@@ -16,11 +17,12 @@ export class PersonComponent implements OnInit {
 
     person: Person;
 
-    constructor(private router: Router, private route: ActivatedRoute, private personService: PersonService) {
-
+    constructor(private router: Router, private route: ActivatedRoute, private personService: PersonService, private _service:AuthenticationService) {
+      this._service.checkCredentials();
     }
 
     ngOnInit() {
+        this._service.checkCredentials();
         this.route.params.subscribe(params=> {
             this.personService.getPerson(Number(params['id'])).subscribe(person => this.person = person);
         });

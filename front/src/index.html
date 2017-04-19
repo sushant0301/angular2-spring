@@ -7,6 +7,20 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css"></link>
+  <!-- 2. Configure SystemJS -->
+  <script>
+    System.config({
+      packages: {
+        app: {
+          format: 'register',
+          defaultExtension: 'js'
+        }
+      }
+    });
+    System.import('app/main')
+      .then(null, console.error.bind(console));
+  </script>
 </head>
 <body>
   <app-root>Loading...</app-root>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Response} from '@angular/http';
 import {Router} from '@angular/router';
 import * as Rx from 'rxjs/Rx';
+import {AuthenticationService} from '../auth/authentication.service';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -22,11 +23,12 @@ export class PersonListComponent implements OnInit, Table<Person> {
     personPage: PaginationPage<Person>;
     self: Table<Person>;
 
-    constructor(private personService: PersonService, private router: Router) {
-
+    constructor(private personService: PersonService, private router: Router, private _service:AuthenticationService) {
+      this._service.checkCredentials();
     }
 
     ngOnInit() {
+        this._service.checkCredentials();
         let observable: Rx.Observable<PaginationPage<any>> = this.fetchPage(0, 10, null);
         showLoading();
         observable.subscribe(doNothing, hideLoading, hideLoading);
@@ -50,5 +52,8 @@ export class PersonListComponent implements OnInit, Table<Person> {
         observable.switchMap(() => {
             return this.fetchPage(0, 10, null);
         }).subscribe(doNothing, hideLoading, hideLoading);
+    }
+    logout(){
+      this._service.logout();
     }
 }
